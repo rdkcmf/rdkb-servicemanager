@@ -12,13 +12,5 @@
 #
 ##########################################################################
 
-if CCSP_ARCH_ARM
-OPT_SRCDIR = source-arm
-endif
-
-if CCSP_ARCH_ATOM
-OPT_SRCDIR = source-atom
-endif
-
-SUBDIRS = $(OPT_SRCDIR) source
+SUBDIRS = source
 

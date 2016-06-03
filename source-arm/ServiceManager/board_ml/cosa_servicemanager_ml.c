@@ -1,1 +1,0 @@
-// ARM specific ServiceManager middle layer calls go here

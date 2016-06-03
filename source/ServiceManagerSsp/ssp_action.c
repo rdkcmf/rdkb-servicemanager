@@ -45,17 +45,14 @@ extern  ULONG                   g_ulAllocatedSizePeak;
 ANSC_STATUS ssp_create()
 {
     /* Create component common data model object */
-	printf("MURUGAN: %s ENTER \n", __FUNCTION__);
 
      g_pComponent_COMMON = (PCOMPONENT_COMMON)AnscAllocateMemory(sizeof(COMPONENT_COMMON));
 
     if ( ! g_pComponent_COMMON )
     {
-       	printf("MURUGAN: %s exit ERROR - no memory \n", __FUNCTION__);
+       printf("%s exit ERROR - no memory \n", __FUNCTION__);
        return ANSC_STATUS_RESOURCES;
     }
-
-   	printf("MURUGAN: %s - ComponentCommonDmInit called \n", __FUNCTION__);
 
     ComponentCommonDmInit( g_pComponent_COMMON);
 
@@ -70,7 +67,7 @@ ANSC_STATUS ssp_create()
 
         if ( !pSsdCcdIf )
         {
-           	printf("MURUGAN: %s exit ERROR - no memory \n", __FUNCTION__);
+            printf("%s exit ERROR - no memory \n", __FUNCTION__);
             return ANSC_STATUS_RESOURCES;
         }
         else
@@ -104,8 +101,7 @@ ANSC_STATUS ssp_create()
 
         if ( !pDslhLcbIf )
         {
-        	printf("MURUGAN: %s exit ERROR - no memory \n", __FUNCTION__);
-
+            printf("%s exit ERROR - no memory \n", __FUNCTION__);
             return ANSC_STATUS_RESOURCES;
         }
         else
@@ -117,17 +113,13 @@ ANSC_STATUS ssp_create()
             pDslhLcbIf->Size                     = sizeof(DSLH_LCB_INTERFACE);
         }
     }
-   	printf("MURUGAN: %s - DslhCreateCpeController called \n", __FUNCTION__);
 
     pDslhCpeController = DslhCreateCpeController(NULL, NULL, NULL);
 
     if ( !pDslhCpeController )
     {
-        printf("CANNOT Create pDslhCpeController... Exit!\n");
-
         return ANSC_STATUS_RESOURCES;
     }
-	printf("MURUGAN: %s EXIT \n", __FUNCTION__);
 
     return ANSC_STATUS_SUCCESS;
 }
@@ -141,8 +133,6 @@ ANSC_STATUS ssp_engage()
 	ANSC_STATUS					    returnStatus                = ANSC_STATUS_SUCCESS;
     PCCC_MBI_INTERFACE              pSsdMbiIf                   = (PCCC_MBI_INTERFACE)MsgHelper_CreateCcdMbiIf((void*)bus_handle, g_Subsystem);
     char                            CrName[256];
-
-	printf("MURUGAN: %s ENTER \n", __FUNCTION__);
 
      g_pComponent_COMMON->Health = CCSP_COMMON_COMPONENT_HEALTH_Yellow;
 
@@ -161,7 +151,6 @@ ANSC_STATUS ssp_engage()
     {
         _ansc_sprintf(CrName, "%s", CCSP_DBUS_INTERFACE_CR);
     }
-  	printf("MURUGAN: %s - RegisterCcspDataModel called \n", __FUNCTION__);
 
     returnStatus =
         pDslhCpeController->RegisterCcspDataModel
@@ -178,15 +167,12 @@ ANSC_STATUS ssp_engage()
     if ( returnStatus == ANSC_STATUS_SUCCESS )
     {
         /* System is fully initialized */
-     	printf("MURUGAN: %s - RegisterCcspDataModel success.  System is fully initialized.\n", __FUNCTION__);
      	g_pComponent_COMMON->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
     }
     else
     {
-     	printf("MURUGAN: %s - RegisterCcspDataModel returned FAILURE!!! \n", __FUNCTION__);
-
+     	printf("%s - RegisterCcspDataModel returned FAILURE! \n", __FUNCTION__);
     }
-	printf("MURUGAN: %s EXIT \n", __FUNCTION__);
 
     return ANSC_STATUS_SUCCESS;
 }
@@ -200,12 +186,9 @@ ANSC_STATUS ssp_cancel()
 	int                             nRet  = 0;
     char                            CrName[256];
     char                            CpName[256];
-	printf("MURUGAN: %s ENTER \n", __FUNCTION__);
 
     if(  g_pComponent_COMMON == NULL)
     {
-    	printf("MURUGAN: %s exit ERROR \n", __FUNCTION__);
-
         return ANSC_STATUS_SUCCESS;
     }
 
@@ -232,7 +215,6 @@ ANSC_STATUS ssp_cancel()
      g_pComponent_COMMON = NULL;
     pSsdCcdIf                = NULL;
     pDslhCpeController       = NULL;
-  	printf("MURUGAN: %s EXIT \n", __FUNCTION__);
 
     return ANSC_STATUS_SUCCESS;
 }

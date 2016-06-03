@@ -27,14 +27,14 @@ hardware_platform = i686-linux-gnu
 lib_LTLIBRARIES = libServiceManagerSsp.la
 libServiceManagerSsp_la_CPPFLAGS = -I$(top_srcdir)/source/ServiceManagerCore -I$(top_srcdir)/source/ServiceManagerSsp -I$(top_srcdir)/include $(CPPFLAGS)
 
-if CCSP_ARCH_ARM
-AM_CFLAGS += -D_ANSC_LITTLE_ENDIAN_
-libServiceManagerSsp_la_CPPFLAGS += -I$(top_srcdir)/source-arm/ServiceManager/board_sbapi -I$(top_srcdir)/source-arm/ServiceManager/board_ml/
-endif
+#if CCSP_ARCH_ARM
+#AM_CFLAGS += -D_ANSC_LITTLE_ENDIAN_
+#libServiceManagerSsp_la_CPPFLAGS += -I$(top_srcdir)/source-arm/ServiceManager/board_sbapi -I$(top_srcdir)/source-arm/ServiceManager/board_ml/
+#endif
 
-if CCSP_ARCH_ATOM
-libServiceManagerSsp_la_CPPFLAGS += -I$(top_srcdir)/source-atom/ServiceManager/board_sbapi -I$(top_srcdir)/source-atom/ServiceManager/board_ml/
-endif
+#if CCSP_ARCH_ATOM
+#libServiceManagerSsp_la_CPPFLAGS += -I$(top_srcdir)/source-atom/ServiceManager/board_sbapi -I$(top_srcdir)/source-atom/ServiceManager/board_ml/
+#endif
 
 libServiceManagerSsp_la_SOURCES = ssp_messagebus_interface.c ssp_main.c ssp_action.c plugin_main.c cosa_servicemanager_internal.c cosa_servicemanager_dml.c
 

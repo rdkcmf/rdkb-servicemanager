@@ -40,13 +40,12 @@ static void daemonize(void);
  */
 int  cmd_dispatch(int  command)
 {
-	printf("MURUGAN: cmd_dispatch() called with command: \'%c\'\n", command);
     switch ( command )
     {
         case    'e' :
 
 #ifdef _ANSC_LINUX
-            printf("MURUGAN: Connect to bus daemon...\n");
+            printf("Connect to bus daemon...\n");
 
             {
                 char                            CName[256];
@@ -60,7 +59,6 @@ int  cmd_dispatch(int  command)
                     _ansc_sprintf(CName, "%s", CCSP_COMPONENT_ID);
                 }
 
-                 printf("MURUGAN: ssp_Mbi_MessageBusEngage() called\n");
 		ssp_Mbi_MessageBusEngage
                     ( 
                         CName,
@@ -69,9 +67,7 @@ int  cmd_dispatch(int  command)
                     );
             }
 #endif
-		printf("MURUGAN: ssp_create() called\n");
             ssp_create();
-		printf("MURUGAN: ssp_engage() called\n");
             ssp_engage();
 
             break;
@@ -97,7 +93,6 @@ int  cmd_dispatch(int  command)
         default:
             break;
     }
-  	printf("MURUGAN: cmd_dispatch EXIT \n");
 
     return 0;
 }
@@ -114,7 +109,7 @@ int msgBusInit(const char *pComponentName)
     char *subSys            = NULL;  
     DmErr_t    err;
 
-    printf("MURUGAN: [ServiceManager] msgBusInit called with %s\n", pComponentName);
+    printf("[ServiceManager] msgBusInit called with %s\n", pComponentName);
 
     AnscCopyString(g_Subsystem, "eRT.");
 
@@ -125,27 +120,21 @@ int msgBusInit(const char *pComponentName)
 
     subSys = NULL;      /* use default sub-system */
 
-    printf("MURUGAN: [ServiceManager] Cdm_Init called with componentname: %s\n", pComponentName);
     err = Cdm_Init(bus_handle, subSys, NULL, NULL, pComponentName);
     if (err != CCSP_SUCCESS)
     {
-	printf("MURUGAN: Cdm_Init Failed!!!!\n");
         fprintf(stderr, "Cdm_Init: %s\n", Cdm_StrError(err));
         exit(1);
     }
 
     system("touch /tmp/servicemanager_initialized");
-    printf("MURUGAN: msgBusInit - /tmp/servicemanager_initialized created\n");
 
-    printf("RDK_LOG_WARN, HARV : /tmp/servicemanager_initialized created\n");
     if ( bRunAsDaemon )
     {
-	printf("MURUGAN: msgBusInit - bRunAsDaemon is true. Return failure!!!\n");
         return 1; //Failure
     }
     else
     {
-	printf("MURUGAN: msgBusInit - bRunAsDaemon is %d\n", bRunAsDaemon);
         while ( cmdChar != 'q' )
         {
             cmdChar = getchar();
@@ -154,19 +143,16 @@ int msgBusInit(const char *pComponentName)
         }
     }
 
-    printf("MURUGAN: msgBusInit - Cdm_Term() called\n");
     err = Cdm_Term();
     if (err != CCSP_SUCCESS)
     {
-	printf("MURUGAN: msgBusInit - Cdm_Term() failed!!! exit(1)\n");
     	fprintf(stderr, "Cdm_Term: %s\n", Cdm_StrError(err));
     	exit(1);
     }
 
-    printf("MURUGAN: msgBusInit - ssp_cancel() called\n");
     ssp_cancel();
-printf("MURUGAN: [ServiceManager] msgBusInit - EXIT\n");    
-return 0; //Success
+
+    return 0; //Success
 }
 
 /*----------------------------------------------------------------------------*/

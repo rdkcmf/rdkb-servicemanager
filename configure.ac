@@ -102,14 +102,6 @@ AC_CONFIG_FILES(
 	source/Makefile
 	source/ServiceManagerCore/Makefile
 	source/ServiceManagerSsp/Makefile
-	source-arm/ServiceManager/board_sbapi/Makefile
-	source-arm/ServiceManager/board_ml/Makefile
-	source-arm/ServiceManager/Makefile
-	source-arm/Makefile
-	source-atom/ServiceManager/board_sbapi/Makefile
-	source-atom/ServiceManager/board_ml/Makefile
-	source-atom/ServiceManager/Makefile
-	source-atom/Makefile
 )
 
 

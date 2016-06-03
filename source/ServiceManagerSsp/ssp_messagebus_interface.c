@@ -16,13 +16,10 @@ extern char                 g_SubSysPrefix_Irep[32];
 
 DBusHandlerResult CcspComp_path_message_func(DBusConnection  *conn,DBusMessage *message,void  *user_data)
 {
-	printf ("MURUGAN: ENTER %s \n", __FUNCTION__);
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     const char *interface = dbus_message_get_interface(message);
     const char *method   = dbus_message_get_member(message);
     DBusMessage *reply;
-
-	printf ("MURUGAN: %s called dbus_message_new_method_return() \n", __FUNCTION__);
 
     reply = dbus_message_new_method_return (message);
     if (reply == NULL)
@@ -30,7 +27,6 @@ DBusHandlerResult CcspComp_path_message_func(DBusConnection  *conn,DBusMessage *
         return DBUS_HANDLER_RESULT_HANDLED;
     }
 
-	printf ("MURUGAN: CcspBaseIf_base_path_message_func() called. EXIT %s \n", __FUNCTION__);
   return CcspBaseIf_base_path_message_func
                (
                    conn,
@@ -44,17 +40,15 @@ DBusHandlerResult CcspComp_path_message_func(DBusConnection  *conn,DBusMessage *
 
 ANSC_STATUS ssp_Mbi_MessageBusEngage(char * component_id,char * config_file,char * path)
 {
-  printf ("MURUGAN: ENTER %s \n", __FUNCTION__);
     ANSC_STATUS                 returnStatus       = ANSC_STATUS_SUCCESS;
     CCSP_Base_Func_CB           cb                 = {0};
 
     if ( ! component_id || ! path )
     {
-        printf(" !!! ssp_Mbi_MessageBusEngage: component_id or path is NULL !!!\n");
+        CcspTraceError(("ssp_Mbi_MessageBusEngage: component_id or path is NULL !!!\n"));
     }
 
     /* Connect to message bus */
-  printf ("MURUGAN: ssp_Mbi_MessageBusEngage - CCSP_Message_Bus_Init() called\n");
     returnStatus = 
         CCSP_Message_Bus_Init
             (
@@ -67,10 +61,7 @@ ANSC_STATUS ssp_Mbi_MessageBusEngage(char * component_id,char * config_file,char
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
-
-printf ("MURUGAN: ssp_Mbi_MessageBusEngage - CCSP_Message_Bus_Init() returned error !!!!\n");
         CcspTraceError((" !!! SSD Message Bus Init ERROR !!!\n"));
-
         return returnStatus;
     }
 
@@ -97,8 +88,6 @@ printf ("MURUGAN: ssp_Mbi_MessageBusEngage - CCSP_Message_Bus_Init() returned er
     cb.freeResources          = ssp_Mbi_FreeResources;
     cb.busCheck               = ssp_Mbi_Buscheck;
 
-printf ("MURUGAN: ssp_Mbi_MessageBusEngage - CcspBaseIf_SetCallback() called\n");    
-
     CcspBaseIf_SetCallback(bus_handle, &cb);
 
     /* Register service callback functions */
@@ -113,8 +102,7 @@ printf ("MURUGAN: ssp_Mbi_MessageBusEngage - CcspBaseIf_SetCallback() called\n")
 
     if ( returnStatus != CCSP_Message_Bus_OK )
     {
-        printf(" !!! CCSP_Message_Bus_Register_Path ERROR returnStatus: %d\n!!!\n", (int)returnStatus);
-
+        CcspTraceError(("CCSP_Message_Bus_Register_Path ERROR returnStatus: %d\n!!!\n", (int)returnStatus));
         return returnStatus;
     }
 
@@ -130,12 +118,10 @@ printf ("MURUGAN: ssp_Mbi_MessageBusEngage - CcspBaseIf_SetCallback() called\n")
 
     if ( returnStatus != CCSP_Message_Bus_OK )
     {
-         printf(" !!! CCSP_Message_Bus_Register_Event: CurrentSessionIDSignal ERROR returnStatus: %d!!!\n", (int)returnStatus);
-
+        CcspTraceError(("CCSP_Message_Bus_Register_Event: CurrentSessionIDSignal ERROR returnStatus: %d!!!\n", (int)returnStatus));
         return returnStatus;
     }
 
-printf ("MURUGAN: ssp_Mbi_MessageBusEngage - EXIT\n");
     return ANSC_STATUS_SUCCESS;
 
 }

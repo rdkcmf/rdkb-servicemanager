@@ -27,14 +27,14 @@ hardware_platform = i686-linux-gnu
 bin_PROGRAMS = CcspServiceManager
 CcspServiceManager_CPPFLAGS = -I$(top_srcdir)/source/ServiceManagerCore -I$(top_srcdir)/source/ServiceManagerSsp -I$(top_srcdir)/include $(CPPFLAGS)
 
-if CCSP_ARCH_ARM
-AM_CFLAGS += -D_ANSC_LITTLE_ENDIAN_
-CcspServiceManager_CPPFLAGS += -I$(top_srcdir)/source-arm/ServiceManager/board_ml -I$(top_srcdir)/source-arm/ServiceManager/board_sbapi
-endif
+#if CCSP_ARCH_ARM
+#AM_CFLAGS += -D_ANSC_LITTLE_ENDIAN_
+#CcspServiceManager_CPPFLAGS += -I$(top_srcdir)/source-arm/ServiceManager/board_ml -I$(top_srcdir)/source-arm/ServiceManager/board_sbapi
+#endif
 
-if CCSP_ARCH_ATOM
-CcspServiceManager_CPPFLAGS += -I$(top_srcdir)/source-atom/ServiceManager/board_ml -I$(top_srcdir)/source-atom/ServiceManager/board_sbapi
-endif
+#if CCSP_ARCH_ATOM
+#CcspServiceManager_CPPFLAGS += -I$(top_srcdir)/source-atom/ServiceManager/board_ml -I$(top_srcdir)/source-atom/ServiceManager/board_sbapi
+#endif
 
 CcspServiceManager_SOURCES = servicemanager.c
 CcspServiceManager_LDADD = ${top_builddir}/source/ServiceManagerSsp/libServiceManagerSsp.la

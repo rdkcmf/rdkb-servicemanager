@@ -38,7 +38,7 @@ CosaServiceManagerCreate
         VOID
     )
 {
-	printf("MURUGAN: %s ENTER \n", __FUNCTION__);
+	printf("%s ENTER \n", __FUNCTION__);
 	PCOSA_DATAMODEL_SERVICEMANAGER       pMyObject    = (PCOSA_DATAMODEL_SERVICEMANAGER)NULL;
 
     /*
@@ -48,11 +48,11 @@ CosaServiceManagerCreate
 
     if ( !pMyObject )
     {
-    	printf("MURUGAN: %s exit ERROR \n", __FUNCTION__);
+    	printf("%s exit ERROR \n", __FUNCTION__);
 
         return  (ANSC_HANDLE)NULL;
     }
-	printf("MURUGAN: %s EXIT \n", __FUNCTION__);
+	printf("%s EXIT \n", __FUNCTION__);
 
     return  (ANSC_HANDLE)pMyObject;
 }
@@ -66,19 +66,19 @@ CosaServiceManagerInitialize
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PCOSA_DATAMODEL_SERVICEMANAGER       pMyObject           = (PCOSA_DATAMODEL_SERVICEMANAGER)hThisObject;
-	printf("MURUGAN: %s ENTER \n", __FUNCTION__);
+	printf("%s ENTER \n", __FUNCTION__);
 
 
     returnStatus = CosaDmlServiceManagerInit((ANSC_HANDLE)pMyObject);
     
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
-    	printf("MURUGAN: %s Exit ERROR \n", __FUNCTION__);
+    	printf("%s Exit ERROR \n", __FUNCTION__);
 
         return  returnStatus;
     }
     
-	printf("MURUGAN: %s EXIT \n", __FUNCTION__);
+	printf("%s EXIT \n", __FUNCTION__);
 
     return returnStatus;
 }
@@ -92,11 +92,11 @@ CosaServiceManagerRemove
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PCOSA_DATAMODEL_SERVICEMANAGER            pMyObject    = (PCOSA_DATAMODEL_SERVICEMANAGER)hThisObject;    
-	printf("MURUGAN: %s ENTER \n", __FUNCTION__);
+	printf("%s ENTER \n", __FUNCTION__);
 
     /* Remove self */
     AnscFreeMemory((ANSC_HANDLE)pMyObject);
-	printf("MURUGAN: %s EXIT \n", __FUNCTION__);
+	printf("%s EXIT \n", __FUNCTION__);
 
 	return returnStatus;
 }

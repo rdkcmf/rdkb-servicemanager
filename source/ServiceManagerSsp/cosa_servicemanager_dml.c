@@ -42,11 +42,11 @@ X_RDKCENTRAL_COM_ServiceManager_GetParamBoolValue
     BOOL*                       pBool
 )
 {
-    printf("### MURUGAN ### [ServiceManager] %s : ENTER \n", __FUNCTION__ );
+    printf("[ServiceManager] %s : ENTER \n", __FUNCTION__ );
 
     //nothing to do
 
-    printf("### MURUGAN ### [ServiceManager] %s : EXIT \n", __FUNCTION__ );
+    printf("[ServiceManager] %s : EXIT \n", __FUNCTION__ );
     return TRUE;
 }
 
@@ -59,11 +59,11 @@ X_RDKCENTRAL_COM_ServiceManager_SetParamBoolValue
 	BOOL                        bValue
 )
 {
-    printf("### MURUGAN ### [ServiceManager] %s : ENTER \n", __FUNCTION__ );
+    printf("[ServiceManager] %s : ENTER \n", __FUNCTION__ );
 
     //nothing to do
 
-    printf("### MURUGAN ### [ServiceManager] %s : EXIT \n", __FUNCTION__ );
+    printf("[ServiceManager] %s : EXIT \n", __FUNCTION__ );
     return TRUE;
 }
 
@@ -75,16 +75,16 @@ X_RDKCENTRAL_COM_ServiceManager_GetParamUlongValue
     ULONG*                      puLong
 )
 {
-	printf("### MURUGAN ### [ServiceManager] %s : ENTER \n", __FUNCTION__ );
+	printf("[ServiceManager] %s : ENTER \n", __FUNCTION__ );
 
 	if ( AnscEqualString(ParamName, "Expires", TRUE))
 	{
 		*puLong =  g_ServiceManager_ExpirationTime;
-		printf("### MURUGAN ### [ServiceManager] : ParamName[%s] Value[%d] \n" , ParamName, *puLong );
+		printf("[ServiceManager] : ParamName[%s] Value[%d] \n" , ParamName, *puLong );
 		return TRUE;
 	}
 
-	printf("### MURUGAN ### [ServiceManager] %s : EXIT \n", __FUNCTION__ );
+	printf("[ServiceManager] %s : EXIT \n", __FUNCTION__ );
     return FALSE;
 }
 
@@ -98,16 +98,16 @@ X_RDKCENTRAL_COM_ServiceManager_SetParamUlongValue
 )
 {
 
-	printf("### MURUGAN ### [ServiceManager] %s : ENTER \n", __FUNCTION__ );
+	printf("[ServiceManager] %s : ENTER \n", __FUNCTION__ );
 	
     if ( AnscEqualString(ParamName, "Expires", TRUE))
     {
         g_ServiceManager_ExpirationTime = uValue;
-        printf("### MURUGAN ### [ServiceManager] : ParamName[%s] Value[%d] \n", ParamName, uValue );
+        printf("[ServiceManager] : ParamName[%s] Value[%d] \n", ParamName, uValue );
         return TRUE;
     }
 
-	printf("### MURUGAN ### [ServiceManager] %s : EXIT \n", __FUNCTION__ );
+	printf("[ServiceManager] %s : EXIT \n", __FUNCTION__ );
     return FALSE;
 }
 
@@ -121,7 +121,7 @@ X_RDKCENTRAL_COM_ServiceManager_GetParamStringValue
         ULONG*                      pUlSize
     )
 {
-	printf("### MURUGAN ### [ServiceManager] %s : ENTER \n", __FUNCTION__ );
+	printf("[ServiceManager] %s : ENTER \n", __FUNCTION__ );
 
     if( AnscEqualString(ParamName, "Token", TRUE))
     {
@@ -131,8 +131,8 @@ X_RDKCENTRAL_COM_ServiceManager_GetParamStringValue
 		return TRUE;
     }
 
-    printf("Unsupported parameter '%s'\n", ParamName);
-	printf("### MURUGAN ### [ServiceManager] %s : EXIT \n", __FUNCTION__ );
+    printf("[ServiceManager] Unsupported parameter '%s'\n", ParamName);
+    printf("[ServiceManager] %s : EXIT \n", __FUNCTION__ );
 
     return FALSE;
 }
@@ -146,18 +146,18 @@ X_RDKCENTRAL_COM_ServiceManager_SetParamStringValue
         char*                       pString
     )
 {
-	printf("### MURUGAN ### [ServiceManager] %s : ENTER \n", __FUNCTION__ );
+	printf("[ServiceManager] %s : ENTER \n", __FUNCTION__ );
 
     if( AnscEqualString(ParamName, "Token", TRUE))
     {
     	//g_ServiceManager_Token = "";
 		AnscCopyString(g_ServiceManager_Token, pString);
-		printf("### MURUGAN ### [ServiceManager] : ParamName[%s] Value[%s] \n", ParamName, pString );
+		printf("[ServiceManager] : ParamName[%s] Value[%s] \n", ParamName, pString );
 		return TRUE;
     }
 
-    printf("Unsupported parameter '%s'\n", ParamName);
-	printf("### MURUGAN ### [ServiceManager] %s : EXIT \n", __FUNCTION__ );
+    printf("[ServiceManager] Unsupported parameter '%s'\n", ParamName);
+    printf("[ServiceManager] %s : EXIT \n", __FUNCTION__ );
 
     return FALSE;
 }
