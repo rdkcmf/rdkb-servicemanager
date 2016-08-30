@@ -26,59 +26,71 @@ CosaDmlServiceManagerInit
 
  APIs for Object:
 
+    X_RDKCENTRAL_COM_ServiceAgent.Services.{i}.
+
+    *  Services_GetEntryCount
+    *  Services_GetEntry
+    *  Services_GetParamStringValue
+    *  Services_SetParamStringValue
+    *  Services_Validate
+    *  Services_Commit
+    *  Services_Rollback
 
 ***********************************************************************/
-BOOL
-X_RDKCENTRAL_COM_ServiceManager_GetParamBoolValue
+ULONG
+Services_GetEntryCount
+    (
+        ANSC_HANDLE
+    );
+
+ANSC_HANDLE
+Services_GetEntry
     (
         ANSC_HANDLE                 hInsContext,
-        char*                       ParamName,
-        BOOL*                       pBool
+        ULONG                       nIndex,
+        ULONG*                      pInsNumber
     );
 
-BOOL
-X_RDKCENTRAL_COM_ServiceManager_SetParamBoolValue
-    (
-        ANSC_HANDLE                 hInsContext,
-        char*                       ParamName,
-        BOOL                        bValue
-    );
 
-BOOL
-X_RDKCENTRAL_COM_ServiceManager_GetParamUlongValue
-    (
-		ANSC_HANDLE                 hInsContext,
-		char*                       ParamName,
-		ULONG*                      puLong
-    );
-
-BOOL
-X_RDKCENTRAL_COM_ServiceManager_SetParamUlongValue
-    (
-        ANSC_HANDLE                 hInsContext,
-        char*                       ParamName,
-       ULONG                      uValue
-    );
-
-BOOL
-X_RDKCENTRAL_COM_ServiceManager_GetParamStringValue
+ULONG
+Services_GetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
         char*                       pValue,
         ULONG*                      pUlSize
     );
-
+    
+    
 BOOL
-X_RDKCENTRAL_COM_ServiceManager_SetParamStringValue
+Services_SetParamStringValue
     (
         ANSC_HANDLE                 hInsContext,
         char*                       ParamName,
-        char*                       pString
+        char*                       strValue
+    );
+    
+
+BOOL
+Services_Validate
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       pReturnParamName,
+        ULONG*                      puLength
+    );
+
+ULONG
+Services_Commit
+    (
+        ANSC_HANDLE                 hInsContext
+    );
+
+ULONG
+Services_Rollback
+    (
+        ANSC_HANDLE                 hInsContext
     );
 
 
 #endif //_COSA_SERVICEMANAGER_DML_H
-
-
 

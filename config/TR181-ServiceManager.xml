@@ -2,7 +2,7 @@
 <dataModelInfo>
 	<version>1</version>
 	<moduleName>RDKCENTRAL_ServiceManager</moduleName>
-	<author>MuruganViswanathan</author>
+	<author></author>
 	<description>CcspServiceManager component</description>
 	<library>
 		<path>libServiceManagerSsp</path>
@@ -10,28 +10,41 @@
 	</library>
 	<objects>
 		<object>
-			<name>ServiceManager</name>
-			<objectType>object</objectType>
-			<functions>
-				<func_GetParamBoolValue>X_RDKCENTRAL_COM_ServiceManager_GetParamBoolValue</func_GetParamBoolValue>
-				<func_SetParamBoolValue>X_RDKCENTRAL_COM_ServiceManager_SetParamBoolValue</func_SetParamBoolValue>
-				<func_GetParamUlongValue>X_RDKCENTRAL_COM_ServiceManager_GetParamUlongValue</func_GetParamUlongValue>
-				<func_SetParamUlongValue>X_RDKCENTRAL_COM_ServiceManager_SetParamUlongValue</func_SetParamUlongValue>
-				<func_GetParamStringValue>X_RDKCENTRAL_COM_ServiceManager_GetParamStringValue</func_GetParamStringValue>
-				<func_SetParamStringValue>X_RDKCENTRAL_COM_ServiceManager_SetParamStringValue</func_SetParamStringValue>
-			</functions>
-			<parameters>
-				<parameter>
-					<name>Token</name>
-					<type>string(64)</type>
-					<syntax>string</syntax>
-				</parameter>
-				<parameter>
-					<name>Expires</name>
-					<type>unsignedInt</type>
-					<syntax>uint32</syntax>
-				</parameter>
-			</parameters>
+		<name>X_RDKCENTRAL_COM_ServiceAgent</name>
+		<objectType>object</objectType>
+		<functions></functions>
+		<parameters></parameters>
+		   <objects>
+			<object>
+			  <name>Services</name>
+			  <objectType>staticTable</objectType>
+			  <maxInstance>64</maxInstance>
+			  <functions>
+			    <func_GetEntryCount>Services_GetEntryCount</func_GetEntryCount>
+			    <func_GetEntry>Services_GetEntry</func_GetEntry>
+			    <func_GetParamStringValue>Services_GetParamStringValue</func_GetParamStringValue>
+			    <func_SetParamStringValue>Services_SetParamStringValue</func_SetParamStringValue>
+			    <func_Validate>Services_Validate</func_Validate>
+			    <func_Commit>Services_Commit</func_Commit>
+			    <func_Rollback>Services_Rollback</func_Rollback>
+			  </functions>
+			  <parameters>
+			    <parameter>
+			      <name>Name</name>
+			      <type>string(64)</type>
+			      <syntax>string</syntax>
+			      <writable>false</writable>
+			    </parameter>
+			    <parameter>
+			      <name>GoalState</name>  
+			      <type>string(64)</type>
+			      <syntax>string</syntax>
+			      <writable>true</writable>
+			    </parameter>
+			  </parameters>
+			 </object>
+		      </objects>	
 		</object>    <!-- ServiceManager -->
 	</objects>
 </dataModelInfo>
+

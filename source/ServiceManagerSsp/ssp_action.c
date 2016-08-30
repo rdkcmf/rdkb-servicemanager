@@ -8,7 +8,7 @@
 #include "ssp_global.h"
 #include "dslh_dmagnt_interface.h"
 #include "ccsp_trace.h"
-
+#include "servicemanager.h"
 /*----------------------------------------------------------------------------*/
 /*                                   Macros                                   */
 /*----------------------------------------------------------------------------*/
@@ -50,9 +50,11 @@ ANSC_STATUS ssp_create()
 
     if ( ! g_pComponent_COMMON )
     {
-       printf("%s exit ERROR - no memory \n", __FUNCTION__);
+       CcspServiceError(" %s exit ERROR - no memory \n", __FUNCTION__);
        return ANSC_STATUS_RESOURCES;
     }
+
+    CcspServicePrint("%s - ComponentCommonDmInit called \n", __FUNCTION__);
 
     ComponentCommonDmInit( g_pComponent_COMMON);
 
@@ -67,7 +69,7 @@ ANSC_STATUS ssp_create()
 
         if ( !pSsdCcdIf )
         {
-            printf("%s exit ERROR - no memory \n", __FUNCTION__);
+           	CcspServiceError(" %s exit ERROR - no memory \n", __FUNCTION__);
             return ANSC_STATUS_RESOURCES;
         }
         else
@@ -101,7 +103,8 @@ ANSC_STATUS ssp_create()
 
         if ( !pDslhLcbIf )
         {
-            printf("%s exit ERROR - no memory \n", __FUNCTION__);
+        	CcspServiceError(" %s exit ERROR - no memory \n", __FUNCTION__);
+
             return ANSC_STATUS_RESOURCES;
         }
         else
@@ -113,14 +116,17 @@ ANSC_STATUS ssp_create()
             pDslhLcbIf->Size                     = sizeof(DSLH_LCB_INTERFACE);
         }
     }
+   	
 
     pDslhCpeController = DslhCreateCpeController(NULL, NULL, NULL);
 
     if ( !pDslhCpeController )
     {
+        CcspServiceError("CANNOT Create pDslhCpeController... Exit!\n");
+
         return ANSC_STATUS_RESOURCES;
     }
-
+	
     return ANSC_STATUS_SUCCESS;
 }
 
@@ -133,6 +139,7 @@ ANSC_STATUS ssp_engage()
 	ANSC_STATUS					    returnStatus                = ANSC_STATUS_SUCCESS;
     PCCC_MBI_INTERFACE              pSsdMbiIf                   = (PCCC_MBI_INTERFACE)MsgHelper_CreateCcdMbiIf((void*)bus_handle, g_Subsystem);
     char                            CrName[256];
+
 
      g_pComponent_COMMON->Health = CCSP_COMMON_COMPONENT_HEALTH_Yellow;
 
@@ -151,6 +158,7 @@ ANSC_STATUS ssp_engage()
     {
         _ansc_sprintf(CrName, "%s", CCSP_DBUS_INTERFACE_CR);
     }
+  	
 
     returnStatus =
         pDslhCpeController->RegisterCcspDataModel
@@ -167,12 +175,15 @@ ANSC_STATUS ssp_engage()
     if ( returnStatus == ANSC_STATUS_SUCCESS )
     {
         /* System is fully initialized */
+     	CcspServiceInfo(" %s - RegisterCcspDataModel success.  System is fully initialized.\n", __FUNCTION__);
      	g_pComponent_COMMON->Health = CCSP_COMMON_COMPONENT_HEALTH_Green;
     }
     else
     {
-     	printf("%s - RegisterCcspDataModel returned FAILURE! \n", __FUNCTION__);
+     	CcspServiceError(" %s - RegisterCcspDataModel returned FAILURE!!! \n", __FUNCTION__);
+
     }
+	
 
     return ANSC_STATUS_SUCCESS;
 }
@@ -186,9 +197,12 @@ ANSC_STATUS ssp_cancel()
 	int                             nRet  = 0;
     char                            CrName[256];
     char                            CpName[256];
+	
 
     if(  g_pComponent_COMMON == NULL)
     {
+    	CcspServicePrint(" %s exit ERROR \n", __FUNCTION__);
+
         return ANSC_STATUS_SUCCESS;
     }
 

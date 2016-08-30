@@ -5,7 +5,7 @@
 *
 */
 #include "ssp_global.h"
-
+#include "servicemanager.h"
 
 ANSC_HANDLE                 bus_handle               = NULL;
 extern char                 g_Subsystem[32];
@@ -16,10 +16,12 @@ extern char                 g_SubSysPrefix_Irep[32];
 
 DBusHandlerResult CcspComp_path_message_func(DBusConnection  *conn,DBusMessage *message,void  *user_data)
 {
+	
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     const char *interface = dbus_message_get_interface(message);
     const char *method   = dbus_message_get_member(message);
     DBusMessage *reply;
+
 
     reply = dbus_message_new_method_return (message);
     if (reply == NULL)
@@ -27,6 +29,7 @@ DBusHandlerResult CcspComp_path_message_func(DBusConnection  *conn,DBusMessage *
         return DBUS_HANDLER_RESULT_HANDLED;
     }
 
+  CcspServicePrint ("CcspBaseIf_base_path_message_func() called. EXIT %s \n", __FUNCTION__);
   return CcspBaseIf_base_path_message_func
                (
                    conn,
@@ -45,7 +48,7 @@ ANSC_STATUS ssp_Mbi_MessageBusEngage(char * component_id,char * config_file,char
 
     if ( ! component_id || ! path )
     {
-        CcspTraceError(("ssp_Mbi_MessageBusEngage: component_id or path is NULL !!!\n"));
+        CcspServiceError(" !!! ssp_Mbi_MessageBusEngage: component_id or path is NULL !!!\n");
     }
 
     /* Connect to message bus */
@@ -61,11 +64,13 @@ ANSC_STATUS ssp_Mbi_MessageBusEngage(char * component_id,char * config_file,char
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
-        CcspTraceError((" !!! SSD Message Bus Init ERROR !!!\n"));
+
+        CcspServiceError((" !!! SSD Message Bus Init ERROR !!!\n"));
+
         return returnStatus;
     }
 
-    CcspTraceInfo(("INFO: bus_handle: 0x%lx \n", (unsigned long)bus_handle));
+   
     g_MessageBusHandle_Irep = bus_handle;
     AnscCopyString(g_SubSysPrefix_Irep, g_Subsystem);
 
@@ -102,7 +107,8 @@ ANSC_STATUS ssp_Mbi_MessageBusEngage(char * component_id,char * config_file,char
 
     if ( returnStatus != CCSP_Message_Bus_OK )
     {
-        CcspTraceError(("CCSP_Message_Bus_Register_Path ERROR returnStatus: %d\n!!!\n", (int)returnStatus));
+        CcspServiceError(" !!! CCSP_Message_Bus_Register_Path ERROR returnStatus: %d\n!!!\n", (int)returnStatus);
+
         return returnStatus;
     }
 
@@ -118,7 +124,8 @@ ANSC_STATUS ssp_Mbi_MessageBusEngage(char * component_id,char * config_file,char
 
     if ( returnStatus != CCSP_Message_Bus_OK )
     {
-        CcspTraceError(("CCSP_Message_Bus_Register_Event: CurrentSessionIDSignal ERROR returnStatus: %d!!!\n", (int)returnStatus));
+         CcspServiceError(" !!! CCSP_Message_Bus_Register_Event: CurrentSessionIDSignal ERROR returnStatus: %d!!!\n", (int)returnStatus);
+
         return returnStatus;
     }
 

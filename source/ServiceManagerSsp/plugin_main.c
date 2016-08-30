@@ -13,6 +13,7 @@
 #include "ansc_load_library.h"
 #include "cosa_plugin_api.h"
 #include "plugin_main.h"
+#include "servicemanager.h"
 #include "cosa_servicemanager_dml.h"
 #include "cosa_servicemanager_internal.h"
 
@@ -27,12 +28,12 @@ COSA_Init
         void*                       hCosaPlugInfo         /* PCOSA_PLUGIN_INFO passed in by the caller */
     )
 {
-	printf("%s ENTER \n", __FUNCTION__);
+	
     PCOSA_PLUGIN_INFO               pPlugInfo  = (PCOSA_PLUGIN_INFO)hCosaPlugInfo;
 
     if ( uMaxVersionSupported < THIS_PLUGIN_VERSION )
     {
-    	printf("%s Exit ERROR Version not supported! \n", __FUNCTION__);
+    	CcspServiceError("%s Exit ERROR Version not supported! \n", __FUNCTION__);
 
       /* this version is not supported */
         return -1;
@@ -40,26 +41,31 @@ COSA_Init
     
     pPlugInfo->uPluginVersion       = THIS_PLUGIN_VERSION;
     /* register the back-end apis for the data model */
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDKCENTRAL_COM_ServiceManager_GetParamBoolValue",  X_RDKCENTRAL_COM_ServiceManager_GetParamBoolValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDKCENTRAL_COM_ServiceManager_SetParamBoolValue",  X_RDKCENTRAL_COM_ServiceManager_SetParamBoolValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDKCENTRAL_COM_ServiceManager_GetParamUlongValue",  X_RDKCENTRAL_COM_ServiceManager_GetParamUlongValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDKCENTRAL_COM_ServiceManager_SetParamUlongValue",  X_RDKCENTRAL_COM_ServiceManager_SetParamUlongValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDKCENTRAL_COM_ServiceManager_GetParamStringValue",  X_RDKCENTRAL_COM_ServiceManager_GetParamStringValue);
-    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "X_RDKCENTRAL_COM_ServiceManager_SetParamStringValue",  X_RDKCENTRAL_COM_ServiceManager_SetParamStringValue);
+    CcspServicePrint("Registering the back-end apis for the data model\n");
+
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_GetEntryCount",  Services_GetEntryCount);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_GetEntry",  Services_GetEntry);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_GetParamStringValue",  Services_GetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_SetParamStringValue",  Services_SetParamStringValue);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_Validate",  Services_Validate);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_Commit",  Services_Commit);
+    pPlugInfo->RegisterFunction(pPlugInfo->hContext, "Services_Rollback",  Services_Rollback);
+    
 
     /* Create ServiceManager Object for Settings */
     g_pServiceManager = (PCOSA_DATAMODEL_SERVICEMANAGER)CosaServiceManagerCreate();
 
     if ( g_pServiceManager )
     {
+    	  CcspServicePrint("Initializing CosaServiceManager\n");
     	  CosaServiceManagerInitialize(g_pServiceManager);
     }
     else
     {
-    	printf("%s exit ERROR CosaServiceManagerCreate returned 0!\n", __FUNCTION__);
+    	CcspServiceError("%s exit ERROR CosaServiceManagerCreate returned 0!!!\n", __FUNCTION__);
     }
 
-    printf("%s EXIT \n", __FUNCTION__);
+	
 
     return  0;
 }
@@ -83,6 +89,7 @@ COSA_Unload
     /* unload the memory here */
     if ( g_pServiceManager )
     {
+        
         CosaServiceManagerRemove(g_pServiceManager);
     }
 

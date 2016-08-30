@@ -40,12 +40,13 @@ static void daemonize(void);
  */
 int  cmd_dispatch(int  command)
 {
+	
     switch ( command )
     {
         case    'e' :
 
 #ifdef _ANSC_LINUX
-            printf("Connect to bus daemon...\n");
+            CcspServicePrint("Connect to bus daemon...\n");
 
             {
                 char                            CName[256];
@@ -59,6 +60,7 @@ int  cmd_dispatch(int  command)
                     _ansc_sprintf(CName, "%s", CCSP_COMPONENT_ID);
                 }
 
+                CcspServicePrint("ssp_Mbi_MessageBusEngage() called\n");
 		ssp_Mbi_MessageBusEngage
                     ( 
                         CName,
@@ -67,7 +69,9 @@ int  cmd_dispatch(int  command)
                     );
             }
 #endif
+		
             ssp_create();
+		
             ssp_engage();
 
             break;
@@ -109,7 +113,7 @@ int msgBusInit(const char *pComponentName)
     char *subSys            = NULL;  
     DmErr_t    err;
 
-    printf("[ServiceManager] msgBusInit called with %s\n", pComponentName);
+    CcspServicePrint("[ServiceManager] msgBusInit called with %s\n", pComponentName);
 
     AnscCopyString(g_Subsystem, "eRT.");
 
@@ -123,11 +127,13 @@ int msgBusInit(const char *pComponentName)
     err = Cdm_Init(bus_handle, subSys, NULL, NULL, pComponentName);
     if (err != CCSP_SUCCESS)
     {
+	CcspServiceError("Cdm_Init Failed!!!!\n");
         fprintf(stderr, "Cdm_Init: %s\n", Cdm_StrError(err));
         exit(1);
     }
 
     system("touch /tmp/servicemanager_initialized");
+    CcspServicePrint("msgBusInit - /tmp/servicemanager_initialized created\n");
 
     if ( bRunAsDaemon )
     {
@@ -146,13 +152,15 @@ int msgBusInit(const char *pComponentName)
     err = Cdm_Term();
     if (err != CCSP_SUCCESS)
     {
+	CcspServiceError("msgBusInit - Cdm_Term() failed!!! exit(1)\n");
     	fprintf(stderr, "Cdm_Term: %s\n", Cdm_StrError(err));
     	exit(1);
     }
 
+   
     ssp_cancel();
-
-    return 0; //Success
+  
+return 0; //Success
 }
 
 /*----------------------------------------------------------------------------*/
@@ -171,7 +179,7 @@ static void daemonize(void) {
 		break;
 	case -1:
 		// Error
-		printf("ServiceManager: Error daemonizing (fork)! %d - %s\n", errno, strerror(
+		CcspServiceError("ServiceManager: Error daemonizing (fork)! %d - %s\n", errno, strerror(
 				errno));
 		exit(0);
 		break;
@@ -180,7 +188,7 @@ static void daemonize(void) {
 	}
 
 	if (setsid() < 	0) {
-		printf("ServiceManager: Error demonizing (setsid)! %d - %s\n", errno, strerror(errno));
+		CcspServiceError("ServiceManager: Error demonizing (setsid)! %d - %s\n", errno, strerror(errno));
 		exit(0);
 	}
 

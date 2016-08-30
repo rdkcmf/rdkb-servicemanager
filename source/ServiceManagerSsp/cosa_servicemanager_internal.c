@@ -31,14 +31,14 @@
 
 #include "cosa_servicemanager_internal.h"
 #include "cosa_servicemanager_dml.h"
-
+#include "servicemanager.h"
 ANSC_HANDLE
 CosaServiceManagerCreate
     (
         VOID
     )
 {
-	printf("%s ENTER \n", __FUNCTION__);
+	
 	PCOSA_DATAMODEL_SERVICEMANAGER       pMyObject    = (PCOSA_DATAMODEL_SERVICEMANAGER)NULL;
 
     /*
@@ -48,11 +48,9 @@ CosaServiceManagerCreate
 
     if ( !pMyObject )
     {
-    	printf("%s exit ERROR \n", __FUNCTION__);
-
+    	CcspServicePrint("%s exit ERROR \n", __FUNCTION__);
         return  (ANSC_HANDLE)NULL;
     }
-	printf("%s EXIT \n", __FUNCTION__);
 
     return  (ANSC_HANDLE)pMyObject;
 }
@@ -66,20 +64,17 @@ CosaServiceManagerInitialize
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PCOSA_DATAMODEL_SERVICEMANAGER       pMyObject           = (PCOSA_DATAMODEL_SERVICEMANAGER)hThisObject;
-	printf("%s ENTER \n", __FUNCTION__);
 
 
     returnStatus = CosaDmlServiceManagerInit((ANSC_HANDLE)pMyObject);
     
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
-    	printf("%s Exit ERROR \n", __FUNCTION__);
 
+	CcspServicePrint("%s Exit ERROR \n", __FUNCTION__);
         return  returnStatus;
     }
     
-	printf("%s EXIT \n", __FUNCTION__);
-
     return returnStatus;
 }
 
@@ -92,11 +87,10 @@ CosaServiceManagerRemove
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PCOSA_DATAMODEL_SERVICEMANAGER            pMyObject    = (PCOSA_DATAMODEL_SERVICEMANAGER)hThisObject;    
-	printf("%s ENTER \n", __FUNCTION__);
 
     /* Remove self */
     AnscFreeMemory((ANSC_HANDLE)pMyObject);
-	printf("%s EXIT \n", __FUNCTION__);
+    CcspServicePrint("%s EXIT \n", __FUNCTION__);
 
 	return returnStatus;
 }

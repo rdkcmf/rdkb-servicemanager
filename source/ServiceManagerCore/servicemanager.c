@@ -14,19 +14,24 @@
 #include "servicemanager.h"
 
 int main(int argc, char* argv[])
-{
-    printf("[ServiceManager] Registering ServiceManager component '%s' with CR ..\n", SERVICEMANAGER_COMPONENT_NAME);
+{   
 
+    /* Initialize logger*/
+    
+    LOGInit();
+    
+    CcspServiceInfo("Registering ServiceManager component '%s' with CR ..\n", SERVICEMANAGER_COMPONENT_NAME);
+    
     msgBusInit(SERVICEMANAGER_COMPONENT_NAME);
        
-    printf("[ServiceManager] Registered ServiceManager component '%s' with CR ..\n", SERVICEMANAGER_COMPONENT_NAME);
+    CcspServiceInfo("Registered ServiceManager component '%s' with CR ..\n", SERVICEMANAGER_COMPONENT_NAME);
 
     while(1)
     {
         sleep(30);
     }
 
-    printf("[ServiceManager] ServiceManager %s EXIT\n", __FUNCTION__ );
+    CcspServiceInfo("ServiceManager %s EXIT\n", __FUNCTION__ );
 
     return 0;
 }

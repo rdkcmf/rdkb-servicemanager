@@ -38,7 +38,8 @@ CcspServiceManager_CPPFLAGS = -I$(top_srcdir)/source/ServiceManagerCore -I$(top_
 
 CcspServiceManager_SOURCES = servicemanager.c
 CcspServiceManager_LDADD = ${top_builddir}/source/ServiceManagerSsp/libServiceManagerSsp.la
-CcspServiceManager_CFLAGS = $(SYSTEMD_CFLAGS)
-CcspServiceManager_LDFLAGS = -lccsp_common -ldl -rdynamic $(SYSTEMD_LDFLAGS)
+CcspServiceManager_CFLAGS = $(SYSTEMD_CFLAGS) 
+CcspServiceManager_CFLAGS += "-DFEATURE_SUPPORT_RDKLOG"
+CcspServiceManager_LDFLAGS = -lccsp_common -ldl -rdynamic $(SYSTEMD_LDFLAGS) -llog4c
 
 
