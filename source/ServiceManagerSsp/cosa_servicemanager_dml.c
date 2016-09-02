@@ -18,6 +18,8 @@
 #include "svcagt_log.h"
 
 #define SVCAGT_DIR_PATH  "/nvram"
+#define SVCAGT_EXCLUDE_PATH  "/usr/ccsp/ccsp-servicemanager-broadband"
+
 /* RDKB Logger defines */
 #define LOG_FATAL 0
 #define LOG_ERROR 1
@@ -143,8 +145,8 @@ CosaDmlServiceManagerInit
 	
 	int svc_ret = -1;
    	
-	CcspServicePrint("Initialize service-agent under :%s\n", SVCAGT_DIR_PATH);
-	svc_ret = svc_agt_init (SVCAGT_DIR_PATH);
+	CcspServicePrint("Initialize service-agent under :%s, exclude path is:%s\n", SVCAGT_DIR_PATH, SVCAGT_EXCLUDE_PATH);
+	svc_ret = svc_agt_init (SVCAGT_DIR_PATH, SVCAGT_EXCLUDE_PATH);
  	
  
 	if (svc_ret == 0)
