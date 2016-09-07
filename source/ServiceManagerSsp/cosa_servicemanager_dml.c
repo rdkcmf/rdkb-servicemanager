@@ -137,17 +137,14 @@ CosaDmlServiceManagerInit
         ANSC_HANDLE                 hThisObject
     )
 {
-
-
-#ifdef SVCAGENT_LOGGER
-  	svcagt_log_set_handler (__report_log);
-#endif
-	
 	int svc_ret = -1;
    	
 	CcspServicePrint("Initialize service-agent under :%s, exclude path is:%s\n", SVCAGT_DIR_PATH, SVCAGT_EXCLUDE_PATH);
-	svc_ret = svc_agt_init (SVCAGT_DIR_PATH, SVCAGT_EXCLUDE_PATH);
- 	
+	#ifdef SVCAGENT_LOGGER
+		svc_ret = svc_agt_init (SVCAGT_DIR_PATH, SVCAGT_EXCLUDE_PATH, __report_log);
+	#else
+		svc_ret = svc_agt_init (SVCAGT_DIR_PATH, SVCAGT_EXCLUDE_PATH, NULL);
+	#endif
  
 	if (svc_ret == 0)
 	{
