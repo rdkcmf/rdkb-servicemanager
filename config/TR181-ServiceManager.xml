@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
  If not stated otherwise in this file or this component's Licenses.txt file the
  following copyright and licenses apply:
@@ -16,7 +17,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<?xml version="1.0" encoding="utf-8" ?>
 <dataModelInfo>
 	<version>1</version>
 	<moduleName>RDKCENTRAL_ServiceManager</moduleName>
