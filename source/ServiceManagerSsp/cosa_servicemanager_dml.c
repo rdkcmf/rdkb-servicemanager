@@ -51,7 +51,7 @@ static void __report_log (int level, const char * log_msg);
 void LOGInit()
 {
 #ifdef FEATURE_SUPPORT_RDKLOG
-     rdk_logger_init(DEBUG_INI_NAME);
+    RDK_LOGGER_INIT();
 #endif
 }
 
