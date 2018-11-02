@@ -1,0 +1,68 @@
+<!--
+ If not stated otherwise in this file or this component's Licenses.txt file the
+ following copyright and licenses apply:
+
+ Copyright 2016 RDK Management
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<?xml version="1.0" encoding="utf-8" ?>
+<dataModelInfo>
+	<version>1</version>
+	<moduleName>RDKCENTRAL_ServiceManager</moduleName>
+	<author></author>
+	<description>CcspServiceManager component</description>
+	<library>
+		<path>libServiceManagerSsp</path>
+		<func_Init>COSA_Init</func_Init>
+	</library>
+	<objects>
+		<object>
+		<name>X_RDKCENTRAL_COM_ServiceAgent</name>
+		<objectType>object</objectType>
+		<functions></functions>
+		<parameters></parameters>
+		   <objects>
+			<object>
+			  <name>Services</name>
+			  <objectType>staticTable</objectType>
+			  <maxInstance>64</maxInstance>
+			  <functions>
+			    <func_GetEntryCount>Services_GetEntryCount</func_GetEntryCount>
+			    <func_GetEntry>Services_GetEntry</func_GetEntry>
+			    <func_GetParamStringValue>Services_GetParamStringValue</func_GetParamStringValue>
+			    <func_SetParamStringValue>Services_SetParamStringValue</func_SetParamStringValue>
+			    <func_Validate>Services_Validate</func_Validate>
+			    <func_Commit>Services_Commit</func_Commit>
+			    <func_Rollback>Services_Rollback</func_Rollback>
+			  </functions>
+			  <parameters>
+			    <parameter>
+			      <name>Name</name>
+			      <type>string(64)</type>
+			      <syntax>string</syntax>
+			      <writable>false</writable>
+			    </parameter>
+			    <parameter>
+			      <name>GoalState</name>  
+			      <type>string(64)</type>
+			      <syntax>string</syntax>
+			      <writable>true</writable>
+			    </parameter>
+			  </parameters>
+			 </object>
+		      </objects>	
+		</object>    <!-- ServiceManager -->
+	</objects>
+</dataModelInfo>
+
